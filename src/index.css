@@ -299,6 +299,12 @@ body {
   border: 1px solid #f5c6cb;
 }
 
+.error {
+  color: crimson;
+  font-size: 0.9rem;
+  margin-top: 4px;
+}
+
 /* Responsive */
 @media (max-width: 768px) {
   .container {
