@@ -182,6 +182,22 @@ body {
   box-shadow: 0 4px 10px rgba(0,0,0,0.15);
 }
 
+.download-btn {
+  margin-top: 8px;
+  padding: 6px 12px;
+  background-color: #1976d2;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 13px;
+  transition: background 0.2s ease-in-out;
+}
+
+.download-btn:hover {
+  background-color: #1565c0;
+}
+
 .submission-header {
   display: flex;
   justify-content: space-between;

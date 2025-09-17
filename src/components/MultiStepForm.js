@@ -7,6 +7,7 @@ import * as Yup from 'yup';
 import { Formik, Form } from 'formik';
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import { storage } from "../firebase/config"; 
+import { jsPDF } from "jspdf";
 
 
 const MultiStepForm = () => {
@@ -29,10 +30,38 @@ const MultiStepForm = () => {
     setExpandedId(expandedId === id ? null : id);
   };
 
-  // Load user's submissions
-  useEffect(() => {
-    loadSubmissions();
-  }, [userId]);
+  // Download function
+  const handleDownload = (submission) => {
+    const doc = new jsPDF();
+
+    // Title
+    doc.setFontSize(16);
+    doc.text(`Submission #${submission.id.slice(-8)}`, 10, 20);
+
+    // Details
+    doc.setFontSize(12);
+    const lines = [
+      `Name: ${submission.firstName} ${submission.lastName}`,
+      `Date of Birth: ${submission.dateOfBirth}`,
+      `Gender: ${submission.gender}`,
+      `Address: ${submission.address}`,
+      `Phone: ${submission.phone}`,
+      `Nationality: ${submission.nationality}`,
+      `LinkedIn: ${submission.linkedin || "N/A"}`,
+      `Preferred Language: ${submission.language}`,
+      `Uploaded PDF: ${submission.pdfFileName || "N/A"}`,
+      `Notes: ${submission.notes || "N/A"}`
+    ];
+
+    let y = 30;
+    lines.forEach((line) => {
+      doc.text(line, 10, y);
+      y += 10; // spacing
+    });
+
+    // Save PDF
+    doc.save(`submission-${submission.id.slice(-8)}.pdf`);
+  };
 
   const loadSubmissions = async () => {
     try {
@@ -257,6 +286,17 @@ const MultiStepForm = () => {
                       {formatDate(submission.submittedAt)}
                     </span>
                   </div>
+
+                  {/* Download button */}
+                  <button
+                    className="download-btn"
+                    onClick={(e) => {
+                      e.stopPropagation(); // prevent expanding/collapsing
+                      handleDownload(submission);
+                    }}
+                  >
+                    Download Response
+                  </button>
 
                   {/* Expanded Details */}
                   {expandedId === submission.id && (
