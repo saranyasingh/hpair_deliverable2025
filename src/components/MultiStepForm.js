@@ -125,7 +125,7 @@ const MultiStepForm = () => {
       
       if (result.success) {
         setSubmitMessage('Form submitted successfully!');
-        setFormData({});
+        resetForm();
         // Reload submissions to show the new one
         loadSubmissions();
       } else {
@@ -213,16 +213,16 @@ const MultiStepForm = () => {
               {submitMessage && (
                 <div
                   className={`submit-message ${
-                    submitMessage.includes('✅') ? 'success' : 'error'
+                    submitMessage.includes('successfully') ? 'success' : 'error'
                   }`}
                   style={{
                     marginTop: '15px',
                     padding: '10px',
                     borderRadius: '5px',
-                    backgroundColor: submitMessage.includes('✅')
+                    backgroundColor: submitMessage.includes('successfully')
                       ? '#d4edda'
                       : '#f8d7da',
-                    color: submitMessage.includes('✅') ? '#155724' : '#721c24',
+                    color: submitMessage.includes('successfully') ? '#155724' : '#721c24',
                   }}
                 >
                   {submitMessage}
