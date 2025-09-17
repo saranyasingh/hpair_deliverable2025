@@ -23,6 +23,12 @@ const MultiStepForm = () => {
     await signOutUser();
   };
 
+  const [expandedId, setExpandedId] = useState(null);
+
+  const toggleExpand = (id) => {
+    setExpandedId(expandedId === id ? null : id);
+  };
+
   // Load user's submissions
   useEffect(() => {
     loadSubmissions();
@@ -238,28 +244,66 @@ const MultiStepForm = () => {
             <p>No submissions yet. Fill out the form above to get started!</p>
           ) : (
             <div className="submissions-list">
-            {submissions.map((submission) => (
-              <div key={submission.id} className="submission-item" style={{ marginBottom: '20px', padding: '15px', backgroundColor: '#f1f1f1', borderRadius: '8px' }}>
-                <div className="submission-header" style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '10px' }}>
-                  <h3>Submission #{submission.id.slice(-8)}</h3>
-                  <span className="submission-date">{formatDate(submission.submittedAt)}</span>
-                </div>
-                <div className="submission-details" style={{ fontSize: '14px', lineHeight: '1.6' }}>
-                  <p><strong>Name:</strong> {submission.firstName} {submission.lastName}</p>
-                  <p><strong>Date of Birth:</strong> {submission.dateOfBirth}</p>
-                  <p><strong>Gender:</strong> {submission.gender}</p>
-                  <p><strong>Address:</strong> {submission.address}</p>
-                  <p><strong>Phone:</strong> {submission.phone}</p>
-                  <p><strong>Nationality:</strong> {submission.nationality}</p>
-                  <p><strong>LinkedIn:</strong> <a href={submission.linkedin} target="_blank" rel="noopener noreferrer">{submission.linkedin}</a></p>
-                  <p><strong>Preferred Language:</strong> {submission.language}</p>
-                  <p><strong>Uploaded PDF:</strong> {submission.pdfFileName || 'N/A'}</p>
+              {submissions.map((submission) => (
+                <div
+                  key={submission.id}
+                  className="submission-card"
+                  onClick={() => toggleExpand(submission.id)}
+                >
+                  {/* Card Header */}
+                  <div className="submission-header">
+                    <h3>Submission #{submission.id.slice(-8)}</h3>
+                    <span className="submission-date">
+                      {formatDate(submission.submittedAt)}
+                    </span>
+                  </div>
 
-                  <p><strong>Notes:</strong> {submission.notes || 'N/A'}</p>
+                  {/* Expanded Details */}
+                  {expandedId === submission.id && (
+                    <div className="submission-details">
+                      <p>
+                        <strong>Name:</strong> {submission.firstName} {submission.lastName}
+                      </p>
+                      <p>
+                        <strong>Date of Birth:</strong> {submission.dateOfBirth}
+                      </p>
+                      <p>
+                        <strong>Gender:</strong> {submission.gender}
+                      </p>
+                      <p>
+                        <strong>Address:</strong> {submission.address}
+                      </p>
+                      <p>
+                        <strong>Phone:</strong> {submission.phone}
+                      </p>
+                      <p>
+                        <strong>Nationality:</strong> {submission.nationality}
+                      </p>
+                      <p>
+                        <strong>LinkedIn:</strong>{" "}
+                        <a
+                          href={submission.linkedin}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                        >
+                          {submission.linkedin}
+                        </a>
+                      </p>
+                      <p>
+                        <strong>Preferred Language:</strong> {submission.language}
+                      </p>
+                      <p>
+                        <strong>Uploaded PDF:</strong>{" "}
+                        {submission.pdfFileName || "N/A"}
+                      </p>
+                      <p>
+                        <strong>Notes:</strong> {submission.notes || "N/A"}
+                      </p>
+                    </div>
+                  )}
                 </div>
-              </div>
-            ))}
-          </div>
+              ))}
+            </div>
           )}
         </div>
       </div>
