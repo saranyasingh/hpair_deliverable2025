@@ -10,6 +10,7 @@ import { storage } from "../firebase/config";
 
 
 const MultiStepForm = () => {
+  const [formData, setFormData] = useState({});
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitMessage, setSubmitMessage] = useState('');
   const [submissions, setSubmissions] = useState([]);
@@ -89,6 +90,7 @@ const MultiStepForm = () => {
       
       if (result.success) {
         setSubmitMessage('Form submitted successfully!');
+        setFormData({});
         // Reload submissions to show the new one
         loadSubmissions();
       } else {
@@ -118,8 +120,7 @@ const MultiStepForm = () => {
       .matches(/^\+?[0-9\s\-]{7,15}$/, 'Enter a valid phone number'),
     nationality: Yup.string().required('Nationality is required'),
     linkedin: Yup.string()
-      .url('Enter a valid URL')
-      .required('LinkedIn profile is required'),
+      .url('Enter a valid URL'),
     language: Yup.string().required('Preferred language is required'),
     notes: Yup.string().max(500, 'Notes must be under 500 characters'),
     pdfFileName: Yup.string().required('PDF is required')
@@ -138,17 +139,19 @@ const MultiStepForm = () => {
             Logout
           </button>
         </div>
-        <p>Please provide your basic personal details.</p>
-        
+
         <div style={{ 
           marginBottom: '20px', 
           padding: '10px', 
-          backgroundColor: '#e3f2fd', 
+          backgroundColor: '#f9fafb',
           borderRadius: '4px',
           fontSize: '14px'
         }}>
           <strong>Logged in as:</strong> {user.email}
         </div>
+
+        <p><strong>Please provide your details below. </strong></p>
+      
         
         <Formik
           initialValues={{

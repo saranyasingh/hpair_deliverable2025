@@ -6,8 +6,6 @@ const PersonalInfoStep = () => {
 
   return (
     <div>
-      <h2>Personal Information</h2>
-      <p>Please provide your details below.</p>
 
       {/* First Name */}
       <div className="form-group">
@@ -93,17 +91,30 @@ const PersonalInfoStep = () => {
         <ErrorMessage name="nationality" component="div" className="error" />
       </div>
 
-      {/* LinkedIn */}
+      {/* Do you have a LinkedIn? */}
       <div className="form-group">
-        <label className="form-label">LinkedIn URL *</label>
-        <Field 
-          type="url" 
-          name="linkedin"
-          className="form-input"
-          placeholder="https://linkedin.com/in/username"
-        />
-        <ErrorMessage name="linkedin" component="div" className="error" />
+        <label className="form-label">Do you have a LinkedIn?</label>
+        <Field as="select" name="hasLinkedin" className="form-input">
+          <option value="">Select</option>
+          <option value="yes">Yes</option>
+          <option value="no">No</option>
+        </Field>
+        <ErrorMessage name="hasLinkedin" component="div" className="error" />
       </div>
+
+      {/* Show LinkedIn field only if "yes" */}
+      {values.hasLinkedin === "yes" && (
+        <div className="form-group">
+          <label className="form-label">LinkedIn URL</label>
+          <Field
+            type="url"
+            name="linkedin"
+            className="form-input"
+            placeholder="https://linkedin.com/in/username"
+          />
+          <ErrorMessage name="linkedin" component="div" className="error" />
+        </div>
+      )}
 
       {/* Preferred Language */}
       <div className="form-group">

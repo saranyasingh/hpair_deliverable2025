@@ -25,13 +25,14 @@ body {
 
 /* Form */
 .form-container {
-  background: #ffffff;
+  background: #e6f0ff;
   border-radius: 12px;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
   padding: 40px;
   margin: 20px 0;
   transition: all 0.3s ease;
 }
+
 
 .form-container:hover {
   transform: translateY(-2px);
@@ -43,6 +44,22 @@ body {
   font-weight: 600;
   color: #495057;
 }
+
+.header-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 20px;
+  background-color: #e3f2fd;
+  border-bottom: 1px solid #d0e2f5;
+  font-size: 14px;
+  border-radius: 4px;
+}
+
+.user-info {
+  font-weight: 500;
+}
+
 
 .form-input, .form-select, .form-textarea {
   width: 100%;
